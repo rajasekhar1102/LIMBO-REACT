@@ -3,8 +3,13 @@ import { NavLink } from "react-router-dom";
 
 const NavBar = ({ user, userProfile }) => {
   return (
-    <nav className="navbar navbar-expand-lg  fs-5 bg-body-tertiary">
-      <div className="container-fluid">
+    <nav
+      class="navbar navbar-expand-lg bg-dark border-bottom border-body"
+      data-bs-theme="dark">
+      <nav
+        class="navbar bg-dark border-bottom border-body"
+        data-bs-theme="dark"></nav>
+      <div className="container-fluid ">
         <NavLink className="navbar-brand fs-3" to="/">
           LIMBO
         </NavLink>
