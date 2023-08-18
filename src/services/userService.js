@@ -6,6 +6,6 @@ const apiEndpoint=config.apiUrl+'/auth/users/';
 
 
 export function register(user){
-   console.log(user)
+
 return http.post(apiEndpoint,user);
 }

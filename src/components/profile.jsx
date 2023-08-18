@@ -47,7 +47,6 @@ class Profile extends Form {
       await getProfile();
 
       if (localStorage.getItem("profile")) {
-        console.log(localStorage.getItem("profile"));
         this.setState({ data: JSON.parse(localStorage.getItem("profile")) });
         this.props.context.setProfile(localStorage.getItem("profileurl"));
       }
@@ -86,7 +85,6 @@ class Profile extends Form {
       this.props.context.setProfile(localStorage.getItem("profileurl"));
       toast("successfully profile updated");
     } catch (er) {
-      console.log(er);
       if (er.response) toast.error(er.response.data.detail);
     }
     this.setState({ disabled: false });
