@@ -13,6 +13,7 @@ class MoviesForm extends Form {
       genreId: "",
       numberInStock: "",
       dailyRentalRate: "",
+      disabled: "",
     },
     genres: [],
     errors: {},
@@ -62,9 +63,11 @@ class MoviesForm extends Form {
   };
 
   doSubmit = async () => {
+    this.setState({ disabled: true });
     try {
       await saveMovie(this.state.data);
     } catch (ex) {}
+    this.setState({ disabled: false });
     this.props.router.navigate(-1);
   };
   render() {

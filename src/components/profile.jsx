@@ -3,7 +3,11 @@ import Joi from "joi";
 import Form from "./form";
 import { toast } from "react-toastify";
 import withRouter from "./router";
-import { getProfile, saveprofile } from "../services/profileService";
+import {
+  getProfile,
+  saveprofile,
+  deleteProfilePic,
+} from "../services/profileService";
 
 class Profile extends Form {
   state = {
@@ -14,6 +18,7 @@ class Profile extends Form {
       date_of_birth: "",
       picture: "",
       phone_number: "",
+      disabled: "",
     },
     errors: {},
   };
@@ -63,11 +68,18 @@ class Profile extends Form {
           {this.renderFileInput("picture", "Picture", "image/*")}
           {this.renderButton("Save")}
         </form>
+        {localStorage.getItem("profileurl") && (
+          <button className="btn btn-danger mt-4" onClick={this.clearProfile}>
+            {" "}
+            remove profile picture{" "}
+          </button>
+        )}
       </div>
     );
   }
 
   doSubmit = async () => {
+    this.setState({ disabled: true });
     try {
       await saveprofile(this.state.data);
       this.setState({ data: JSON.parse(localStorage.getItem("profile")) });
@@ -77,6 +89,18 @@ class Profile extends Form {
       console.log(er);
       if (er.response) toast.error(er.response.data.detail);
     }
+    this.setState({ disabled: false });
+  };
+
+  clearProfile = async () => {
+    try {
+      await deleteProfilePic();
+      const data = { ...this.state.data };
+      data.picture = "";
+      this.props.context.setProfile("");
+      toast("removed profile pic");
+      this.setState({ data });
+    } catch (er) {}
   };
 }
 

@@ -6,13 +6,14 @@ import withRouter from "./router";
 import { Navigate } from "react-router-dom";
 
 class LoginForm extends Form {
-  state = { data: { username: "", password: "" }, errors: {} };
+  state = { data: { username: "", password: "" }, errors: {}, disabled: "" };
   schema = Joi.object({
     username: Joi.string().required().label("Username"),
     password: Joi.string().required().label("Password"),
   });
 
   doSubmit = async () => {
+    this.setState({ disabled: true });
     try {
       await login(this.state.data);
       if (
@@ -32,6 +33,7 @@ class LoginForm extends Form {
         this.setState({ errors });
       }
     }
+    this.setState({ disabled: false });
   };
 
   render() {

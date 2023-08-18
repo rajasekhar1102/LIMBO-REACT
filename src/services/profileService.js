@@ -30,7 +30,7 @@ export  async function getProfile(){
   let imageurl=config.apiUrl+"/store/media/"+imageName;
   //localStorage.setItem('profileurl',imageurl);
   const r=await http.get(imageurl);
-  console.log(r)
+ 
   localStorage.setItem('profileurl',r.data.dataurl);
   
 }
@@ -72,10 +72,13 @@ else {
 }
 }
 
-export  function deleteProfile(data){
-    if(data.id){
-        return http.delete(apiEndpoint+`/${data.id}/`);
-    }
+
+export  async function deleteProfilePic(){
+
+  let imageName=getImageName(JSON.parse(localStorage.getItem('profile')).picture);
+
+    await http.delete(config.apiUrl+"/store/media/"+imageName);
+localStorage.removeItem('profileurl');
 }
 
 

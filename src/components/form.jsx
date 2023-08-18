@@ -3,7 +3,7 @@ import Input from "./input";
 import Select from "./select";
 
 class Form extends Component {
-  state = { data: {}, errors: {} };
+  state = { data: {}, errors: {}, disabled: null };
 
   validateProperty = ({ name, value, files }) => {
     const subschema = this.schema.extract([name]);
@@ -57,7 +57,7 @@ class Form extends Component {
   renderButton = (label) => {
     return (
       <button
-        disabled={this.validate()}
+        disabled={this.state.disabled || this.validate()}
         type="submit"
         className="btn btn-primary">
         {label}
